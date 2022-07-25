@@ -1,0 +1,7 @@
+/conversation {POST call with senderId and recieverId ->
+        if new returns convoId;
+        else returns {convoId, {messages}}
+/message -> {POST call with conversationId, senderId, textData 
+                -> stores message in message collection;
+                returns success message}
+/user -> GET call to this endpoint will return all users name,username, _id

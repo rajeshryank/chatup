@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dashboardstyle.css">
+    <title>DashBoard</title>
+    <script src="https://kit.fontawesome.com/ce5b5e88ea.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="users-container">
+            <div id="user-list-container">
+                <section id="users-list-header">
+                    <h2 id="brand-name">ChatUp</h2>
+                </section>
+                <ul id="list-of-users">
+                </ul>
+            </div>
+        </div>
+        
+        <div id="chat-container">
+            
+            <section id="selected-user-name">
+                <i class="user-icon fa-solid fa-user"></i>
+                <h2 id="selected-user-name-header"></h2>
+                <h2 id="intro-header">Welcome to your dashboard,Select an user to continue chatting..</h2>
+            </section>
+            <section id="text-messages-container">
+
+            </section>
+            <section id="send-message-container">
+                <form autocomplete="off" action="#" id="message-form">
+                    <input autocomplete="off" type="text" name="message" id="message-box" placeholder="start typing..">
+                    <button id="send-button" type="submit"><i
+                            class="send-paper-icon fa-solid fa-paper-plane"></i></button>
+                </form>
+            </section>
+        </div>
+        <div id="about-container">
+            <section id="about-info-container">
+                <div id="about-info-header">
+                    <img id="image" src="./images/—Pngtree—user icon_4479727.png" alt="" srcset="">
+                    <div id="logout">
+                        <i class="fa-solid fa-right-from-bracket log-out-icon" href="buzz.html" title="logout"></i>
+                        <!-- <small id="logout-text">logout</small> -->
+                    </div>
+                </div>
+                <div id="profile-name">My profile</div>
+                <ul id="about-list">
+    
+                </ul>
+            </section>
+
+
+        </div>
+
+    </div>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    
+</body>
+
+</html>
+

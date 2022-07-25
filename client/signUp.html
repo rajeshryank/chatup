@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN IN</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <script src="js/signup.js" defer></script> -->
+</head>
+<body>
+    <div id="container">
+        <div id="brand"><h1>ChatUp</h1></div>
+        <div id="form-container">
+      
+                <h1 id="form-header" class="form-container-element">Sign Up</h1>
+                <form id="form" method="post" action="/signup">
+                <input type="text" name="name" class="form-element form-container-element" id="name-el" placeholder="fullname">
+                <span id="name-error" class="error-text"> </span>
+                <input type="text" name="username" class="form-element form-container-element" id="username-el" placeholder="username">
+                <span id="username-error" class="error-text"> </span>
+                <input type="email" name="email" class="form-element form-container-element" id="email-el" placeholder="email">
+                <span id="email-error" class="error-text"> </span>
+                <input type="password" name="password" class="form-element form-container-element" id="password-el" placeholder="Password">
+                <span id="password-error" class="error-text"> </span>
+                <button type="submit" class="btn form-container-element" >sign up</button>
+                 <div>
+                    <span class="text form-group">already an user?<a href="/login">  signin</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+<script src="validate.js"></script>
+</body>
+</html>

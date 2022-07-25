@@ -1,0 +1,7 @@
+Backend:
+-user password hashed before storing in MongoDb
+-JWT authentication has been implemented
+-login and signup created
+-user login info stored in database named "realtimeChatApp" collection - "users"
+-send messages and messages grouped using conversationID stored in conversation collection
+     which contains [senderId, recieverId] and each message doc contains {conversationId,senderid,textData}

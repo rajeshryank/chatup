@@ -1,0 +1,112 @@
+#users-container {
+    /* background-image: linear-gradient( 83.2deg,  rgba(150,93,233,1) 10.8%, rgba(99,88,238,1) 94.3% ); */
+    background-color:  #262837;
+    height: 99%;
+    width: 25%;
+    border-radius: 0 10px 10px 0 ;
+    text-align: center;
+    margin: 10px 0 0 0;
+}
+#brand-name{
+    transition: 0.1s;
+}
+#brand-name:hover  {
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 900;
+    }
+#user-list-container {
+    width:100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+    display: flex;
+    flex-direction: column;
+}
+/* name and usernames list */
+#users-list-header {
+    background-image: linear-gradient( 83.2deg,  rgba(150,93,233,1) 10.8%, rgba(99,88,238,1) 94.3% );
+    height: 15%;
+    border-radius: 0 10px 0 0;
+}
+
+
+#users-list-header h2 {
+    margin: 23px 23px 23px 0;
+    padding: 20px;
+    text-align: start;
+    font-size: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+#list-of-users {
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    height: 82%;
+    overflow-x: hidden;
+}
+
+ /* customize scrollbar */
+ #list-of-users::-webkit-scrollbar {
+    width: 0.3em;
+  }
+  #list-of-users::-webkit-scrollbar-thumb {
+    background-color: #303347
+  }
+.user-line {
+    /* background-color: #081d34; */
+    background-color: #303347;
+    color: #fff;
+    margin: 15px 5px 0 6px;
+    border-radius: 5px;
+    padding: 5px;
+    transition: 0.2s;
+   display: flex;
+   justify-content: space-between;
+}
+.user-icon{
+    margin: 20px;
+    font-size: 25px;
+    transition: 0.1s;
+}
+
+.user-line:hover {
+    padding: 10px;
+    background-color: 
+    #965de9;
+    /* background-image: linear-gradient( 83.2deg,  rgba(150,93,233,1) 10.8%, rgba(99,88,238,1) 94.3% ); */
+}
+
+.name{
+    margin: 0;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+.user-line-focus-class {
+    padding: 10px;
+    background-color:  #965de9;
+    width: 95%;
+}
+.name:hover{
+    cursor: pointer;
+    padding: 10px;
+    font-weight: 600;
+}
+.name-focus-class {
+    padding: 10px;
+    font-weight: 600;
+}
+.user{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.username{
+    margin: 0;
+    color: #b7bbc9;
+}

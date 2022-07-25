@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;700;900&display=swap');
+@import url("dashboardCssExport/usersContainer.css");
+@import url("dashboardCssExport/chatContainer.css");
+@import url("dashboardCssExport/sendMessageContainer.css");
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #1c1f2c ;
+}
+#container {
+    width: 100vw;
+    height: 98vh;
+    background-color: #1c1f2c ;
+    display: flex;
+   
+}
+#about-container {
+    width: 25%;
+    height: 63%;
+    /* text-align: center; */
+    background-color: #262837;
+    margin: 10px 0 0 10px;
+    border-radius: 10px 0 0 10px;
+    visibility: visible;
+}
+#image {
+    height: 30%;
+    text-align: center;
+}
+#about-info-header {
+    display: flex;
+    align-items: center;
+}
+#about-info-header img {
+    width: 35%;
+    height: 31%;
+}
+#profile-name {
+    color: #fff;
+    padding: 0 0 10px 10px;
+    margin-left: 12px;
+    font-weight: 600;
+    font-size: 18px;
+}
+#about-info-container {
+height: 100%;
+}
+#about-list {
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    height: 60%;
+}
+#about-text-container {
+    height: 60%;
+}
+.about-line {
+    background-color: #303347;
+    color: #fff;
+    /* margin: 0 5px 15px 6px; */
+    border-radius: 5px;
+    padding: 10px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+.about-text-container {
+    display: flex;
+    flex-direction: column;
+}
+.about-icon {
+    margin-left: 30px;
+    font-size: 20px;
+}
+.about-text {
+    font-size: 13px;
+    margin: 0 0 0 40px;
+}
+.about-data {
+    margin: 0 0 0 40px;
+}
+#logout {
+    height: 40%;
+    font-size: 30px;
+    text-align: end;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    visibility: hidden;
+}
+.log-out-icon {
+    margin:0 20px 20px 0;
+    color: #b33a3a;
+}
+.log-out-icon:hover {
+    cursor: pointer;
+
+    color: #ff7900 ;
+}
+
+@media only screen and (max-width:600px) {
+    body { 
+       font-size: 1em; 
+    }
+ }
+ @media only screen and (max-width:1000px) {
+    #about-container {
+        display: none;
+    }
+    #chat-container {
+        width: 75%;
+    }
+
+ }
+ 
+ @media only screen and (max-width:800px){
+   .name {
+    font-size: 15px;
+   }
+    #chat-container {
+        width: 100%;
+    }
+    .user-icon{
+        visibility: hidden;
+    }
+
+ }
+ @media only screen and (max-width: 540px){
+    .username {
+       font-size: 0;
+    }
+    .message-bubble {
+        font-size: 14px;
+    }
+ }
+
+ /* @media only screen and (max-width:450px) {
+    .name {
+        display: hidden;
+    }
+ }  */
