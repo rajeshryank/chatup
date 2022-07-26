@@ -35,7 +35,6 @@ function triggerprivateMessage(message){
 
 // take value from input box and add it to textMessagesContainerEl
 export function addMessageDiv(event) {
-
   event.preventDefault();
   let textMessagesContainerEl = document.getElementById(
     "text-messages-container"
@@ -97,21 +96,13 @@ export async function insertAbout(receieverId,curruser=false) {
     profileInfo.innerText = `${data.name}'s profile`
 }
 
-export async function getMessages(event) {
+export function getMessages(event,receieverId) {
     let messageEl = document.getElementById("text-messages-container");
     messageEl.innerHTML = ""
-    //selected username
-    let userName = event.target.parentElement.lastElementChild.lastElementChild.innerText;
-    //slicing @
-      userName = userName.slice(1)
-    console.log("selected user username: ", userName);
-   
-    let receieverId = localStorage.getItem(userName);
     let currUserId = getFromCookie("currUserId")
-    console.log("curruser Id:", currUserId);
     // fetch "/conversation" and get messages (if present) with the conversation ID
     if (currUserId && receieverId) {
-      let response = await fetch("/conversation", {
+    fetch("/conversation", {
         method: 'POST',
       headers: {
         jwttoken : getFromCookie("jwttoken"),
@@ -119,36 +110,27 @@ export async function getMessages(event) {
         'Content-Type': 'application/json'
       }, 
       body: JSON.stringify({senderId: currUserId,
-                     receieverId:receieverId})} );
-      let data = await response.json()
-    console.log("data recieved from .conversation:", data);
-    //  display reciever name in chat-header
-    let recieverName = event.target.parentElement.firstElementChild.innerText;
-    let messages = data.messages
-    if(messages) {
-        //store conversationId and insert message and set receivername
-        localStorage.setItem("conversationId", data.convoId)
-        let selectedUserNameHeaderEl = document.getElementById("selected-user-name-header")
-        selectedUserNameHeaderEl.innerText = recieverName
-        if(Object.keys(messages).length >= 1) {
-            localStorage.setItem("conversationId", data.convoId)
-            if (Object.keys(messages).length >=1) {
-              insertMessages(messages,currUserId)
-              }
-          }else{
-            let messageEl = document.getElementById("text-messages-container");
-            messageEl.innerHTML = ""
-        }
-    }else{
-      //store converstion Id
-        localStorage.setItem("conversationId", data)
-    }
-    //change visibility of chat-container to visible
-    let chatContainer = document.getElementById("chat-container")
-    chatContainer.style.visibility = "visible"
-    scrollDown()
-    insertAbout(receieverId)
-
+                     receieverId:receieverId})} ).then((response)=>response.json()).then(data=>{
+                      let messages = data.messages
+                      if(messages) {
+                          //store conversationId and insert messages
+                          localStorage.setItem("conversationId", data.convoId)
+                          if(Object.keys(messages).length >= 1) {
+                              localStorage.setItem("conversationId", data.convoId)
+                              if (Object.keys(messages).length >=1) {
+                                insertMessages(messages,currUserId)
+                                }
+                            }else{
+                              let messageEl = document.getElementById("text-messages-container");
+                              messageEl.innerHTML = ""
+                          }
+                      }else{
+                        //store converstion(to send messages)
+                          localStorage.setItem("conversationId", data)
+                      }
+                      scrollDown()
+                      insertAbout(receieverId)
+                     })
     } else {
       console.log("ERROR : Reciever Id not found");
     }
