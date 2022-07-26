@@ -4,4 +4,4 @@
 /message -> {POST call with conversationId, senderId, textData 
                 -> stores message in message collection;
                 returns success message}
-/user -> GET  endpoint will return all users name,username, _id
+/user -> GET  endpoint will return all users name,username,  _id
