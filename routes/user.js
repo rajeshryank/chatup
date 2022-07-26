@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose')
 const { userModel } = require("../models/User");
-const { authenticateToken } = require("../functions/functions");
+const { authenticateToken } = require("../functions/authenticationFunctions.js");
 //body parser
 app.use(express.json());
 app.get("/user/:userid", authenticateToken, async (req,res)=>{

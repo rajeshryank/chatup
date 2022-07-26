@@ -29,19 +29,6 @@ function hashPassword(password) {
 
 //main functions
 
-//jwt authentication function
-function authenticateToken(req, res, next) {
-  let token = req.cookies.jwttoken
-  if (!token) {
-    res.redirect("/login")}
-  jwt.verify(token, process.env.signature, (err, decodedToken) => {
-    if (err) {
-      res.redirect("/login")
-    }
-    next();
-  });
-}
-
 //verify login credentials and generate token if success
 async function generateToken(username, password) {
   try {
@@ -72,7 +59,7 @@ async function generateToken(username, password) {
   }
 }
 
-// add new user (signup)
+// signup user. Send error message if invalid/duplicate
 async function signupUser(name, username, password, email) {
   let userDontExist = await userModel.isEmailDuplicate(email)
   let usernameDontExist = await userModel.isUsernameDuplicate(username)
@@ -97,4 +84,4 @@ async function signupUser(name, username, password, email) {
   }
 
 
-module.exports = { connectToDb, authenticateToken, generateToken, signupUser };
+module.exports = { connectToDb, generateToken, signupUser };

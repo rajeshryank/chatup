@@ -1,19 +1,19 @@
 const express = require("express");
 const app = express();
-//body parser
+// const bodyParser = require("body-parser");
 app.use(express.json());
-const { authenticateToken } = require("../functions/functions");
-app.post('/')
 
+const { authenticateToken } = require("../functions/authenticationFunctions.js");
 const { messageModel } = require("../models/Message");
 
+//store message to DB
 app.post("/message", authenticateToken, async (req,res)=>{
     try {
         let newMessage = new messageModel(req.body)
         await newMessage.save()
-        res.sendStatus(200)
+        return res.sendStatus(200)
     } catch (error) {
-        res.sendStatus(500).json(error)
+        return res.sendStatus(500).json(error)
     }
 })
 

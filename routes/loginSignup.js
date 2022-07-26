@@ -1,45 +1,33 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
-const { authenticateToken } = require("../functions/functions");
+
+const { authenticateToken, authenticateLoginToken} = require("../functions/authenticationFunctions.js");
 const { userModel } = require("../models/User");
-app.use(bodyParser.urlencoded());
+
+app.use(express.json());
 app.use(cookieParser());
 
-function validateLoginToken(req, res, next) {
-  let token = req.cookies.jwttoken;
-  if (!token) {
-    console.log("No token... ");
-    return next();
-  }
-  jwt.verify(token, process.env.signature, (err, decodedToken) => {
-    if (err) {
-      return next();
-    }
-    console.log("Authentication successful!");
-    return res.redirect("/dashboard");
-  });
-}
+
 const { generateToken, signupUser } = require("../functions/functions");
 
 //send loginpage
-app.get("/", validateLoginToken, (req, res) => {
+app.get("/", authenticateLoginToken, (req, res) => {
   console.log("sending login page..");
   res.sendFile(path.join(__dirname, "..", "/client/signIn.html"));
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", authenticateLoginToken, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "/client/signIn.html"));
 });
+
 
 app.post("/login", async (req, res) => {
   console.log("verifying username and password..");
   let { username, password } = req.body;
-  console.log(req.body);
-  // verify username and password generate and store jwt token
+  // verify user credentials. Generate and send jwt token
   let response = await generateToken(username, password);
   if (typeof response == "object") {
     let user = await userModel.find({ username: username });
@@ -69,8 +57,9 @@ app.get("/dashboard", authenticateToken, (req, res) => {
 app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "/client/signUp.html"));
 });
-// verify signup data and redirect to login page if user created
-//else render signup page  and send
+
+// verify signup data and redirect to login page 
+//if error render signup page and send
 app.post("/signup", async (req, res) => {
   let { name, username, password, email } = req.body;
   let response = await signupUser(name, username, password, email);
