@@ -43,7 +43,8 @@ export function addMessageDiv(event) {
   let message = messageBoxEl.value;
   //socket event 
   triggerprivateMessage(message)
-  let template = sentMessage(message) 
+  let currentTime = new Date()
+  let template = sentMessage(message, currentTime) 
   textMessagesContainerEl.innerHTML += template;
   scrollDown();
   messageBoxEl.value = "";

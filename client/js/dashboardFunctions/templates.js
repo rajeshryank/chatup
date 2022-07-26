@@ -32,21 +32,53 @@ export function aboutUserTemplate(name,username,email,phone) {
 }
 
 
+
+function processTime(time){
+    let timeConverted = new Date(time)
+
+    let hr = timeConverted.getHours()
+    let mi = timeConverted.getMinutes()
+    if(hr<10) hr = '0' + hr
+    if(mi<10) mi= '0' + mi
+    let hrMi = hr + ':' + mi
+
+    let currDate = new Date()
+    if(currDate.getDate() > timeConverted.getDate()){
+        let dd = timeConverted.getDate() 
+        let mm = timeConverted.getMonth()
+        let yyyy = timeConverted.getFullYear()
+        let dmy = `${dd}:${mm}:${yyyy}`
+        return {hrMi:hrMi,dmy:dmy}
+    }else {
+        return {hrMi:hrMi}
+    }
+}
+
 // message bubble for sent and recieved messages 
 export function sentMessage(message,time) {
-    console.log("Inside sent message template");
-    let timeConverted = new Date(time)
-    console.log(timeConverted);
-    let template = `<div class="message-bubble">
-            <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${timeConverted}</small></div>
-            <div class="r-empty-div"></div>
-            </div>`
-        return template
+    let finalTime = processTime(time)
+    if(finalTime.dmy){
+        let template = `<div class="message-bubble">
+    <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hrMi} ${finalTime.dmy}</small></div>
+    <div class="r-empty-div"></div>
+    </div>`
+    return template
+    } let template = `<div class="message-bubble">
+    <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hrMi}</small></div>
+    <div class="r-empty-div"></div>
+    </div>`
+    return template
 }
 export function recievedMessage(message,time) {
-    let timeConverted = new Date(time)
-    let template = `<div class="message-bubble">
-    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${timeConverted}</small></div>
+    let finalTime = processTime(time)
+    if(finalTime.dmy){
+        let template = `<div class="message-bubble">
+    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${finalTime.hrMi} ${finalTime.dmy}</small></div>
+    <div class="r-empty-div"></div>
+    </div>`
+    return template
+    } let template = `<div class="message-bubble">
+    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${finalTime.hrMi}</small></div>
     <div class="r-empty-div"></div>
     </div>`
     return template

@@ -53,9 +53,8 @@ socket.on("newMessage", (data) => {
 
  
 async function main() {
-  console.log("calling getusers");
+
   await getUsers();
-  console.log("after getusers");
   socket.emit("login", { loggedInId: localStorage.getItem("currUser") });
   currUserProfile(event);
 
@@ -74,8 +73,6 @@ async function main() {
   let logoutEl = document.getElementsByClassName("log-out-icon")[0];
   logoutEl.addEventListener("click", logOut);
 }
-(async ()=>{
-   await main();
-   console.log("after mainfunction");
-  })()
+main();
+
 
