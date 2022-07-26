@@ -20,6 +20,7 @@ import { recievedMessage } from "./dashboardFunctions/templates.js";
 export const socket = io();
 
 function onClickUser(event) {
+  console.log("inside onclick");
   keepFocused(event);
   //visible chat elements
   document.getElementById("intro-header").style = "visibility:hidden";
@@ -50,15 +51,19 @@ socket.on("newMessage", (data) => {
   scrollDown();
 });
 
+ 
 async function main() {
+  console.log("calling getusers");
   await getUsers();
+  console.log("after getusers");
   socket.emit("login", { loggedInId: localStorage.getItem("currUser") });
   currUserProfile(event);
-  // handle click on the recievers
-  let usersArray = document.getElementsByClassName("name");
-  for (let i = 0; i < usersArray.length; i++) {
-    usersArray[i].addEventListener("click", onClickUser);
-  }
+
+   // handle click on the recievers
+ let usersArray = document.getElementsByClassName("name");
+ for (let i = 0; i < usersArray.length; i++) {
+   usersArray[i].addEventListener("click", onClickUser);
+ }
   // add message bubble onsending message
   let sendbtnEl = document.getElementById("send-button");
   sendbtnEl.addEventListener("click", addMessageDiv);
@@ -69,4 +74,8 @@ async function main() {
   let logoutEl = document.getElementsByClassName("log-out-icon")[0];
   logoutEl.addEventListener("click", logOut);
 }
-main();
+(async ()=>{
+   await main();
+   console.log("after mainfunction");
+  })()
+

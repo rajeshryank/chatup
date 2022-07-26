@@ -5,9 +5,9 @@ exports = module.exports = function (io) {
   io.on("connection", (socket) => {
     socket.on("login", (data) => {
       const { loggedInId } = data;
-      //MongoId:socketid (returns socketId)
+      //MongoId:socketid (get socketId)
       onlineUsersMongoSocketId[loggedInId] = socket.id;
-      //socketid:mongoid (returns mongo id)
+      //socketid:mongoid (get mongoId)
       onlineUsersSocketMongoId[socket.id] = loggedInId;
     });
     socket.on("privateMessage", (data) => {
