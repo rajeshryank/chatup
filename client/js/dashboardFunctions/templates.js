@@ -33,14 +33,15 @@ export function aboutUserTemplate(name,username,email,phone) {
 
 
 // message bubble for sent and recieved messages 
-export function sentMessage(message, time) {
+export function sentMessage(message) {
+
     let template = `<div class="message-bubble">
             <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${"12:21"}</small></div>
             <div class="r-empty-div"></div>
             </div>`
-            return template
+        return template
 }
-export function recievedMessage(message,time) {
+export function recievedMessage(message) {
     // time = Date(time)
     let template = `<div class="message-bubble">
     <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${"12:21"}</small></div>

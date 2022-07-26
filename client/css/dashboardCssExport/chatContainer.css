@@ -35,8 +35,7 @@
        overflow: auto;
        text-align:justify;
        display: flex;
-       flex-direction: column;
-       
+       flex-direction: column;       
    }
    /* customize scrollbar */
    #text-messages-container::-webkit-scrollbar {
@@ -77,6 +76,7 @@
        margin: 10px 0 10px 0;
        float: left;
        margin-left: 10px;
+ 
    }
    .message-bubble {
        font-size: 18px;

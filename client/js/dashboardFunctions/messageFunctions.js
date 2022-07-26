@@ -41,10 +41,8 @@ export function addMessageDiv(event) {
   );
   let messageBoxEl = document.getElementById("message-box");
   let message = messageBoxEl.value;
-  
   //socket event 
   triggerprivateMessage(message)
-
   let template = sentMessage(message) 
   textMessagesContainerEl.innerHTML += template;
   scrollDown();
@@ -65,8 +63,8 @@ export function insertMessages(messages,currUserId) {
             let template = recievedMessage(message.textData, message.createdAt)
             messageEl.innerHTML += template
         }
-    } );
-
+    } 
+    );
   }
 export async function insertAbout(receieverId,curruser=false) {
   // display logout 

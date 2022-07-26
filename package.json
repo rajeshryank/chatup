@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "authors": "Rajeshwaran K, Taiyab gafur shaikh",
+  "authors": "Rajeshwaran K",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
