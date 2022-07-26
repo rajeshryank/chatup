@@ -49,9 +49,11 @@ async function generateToken(username, password) {
         };
         return response;
       } else {
+        console.log("invalid password");
         return "Invalid password";
       }
     } else {
+      console.log("user not found")
       return "User Not Found, please signup.";
     }
   } catch (error) {

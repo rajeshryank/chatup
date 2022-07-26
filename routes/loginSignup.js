@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-// const bodyParser = require("body-parser");
+
 const cookieParser = require("cookie-parser");
 
 const { authenticateToken, authenticateLoginToken} = require("../functions/authenticationFunctions.js");
 const { userModel } = require("../models/User");
 
-app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 
 
@@ -27,6 +29,7 @@ app.get("/login", authenticateLoginToken, (req, res) => {
 app.post("/login", async (req, res) => {
   console.log("verifying username and password..");
   let { username, password } = req.body;
+  console.log(req.body)
   // verify user credentials. Generate and send jwt token
   let response = await generateToken(username, password);
   if (typeof response == "object") {

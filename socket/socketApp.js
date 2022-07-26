@@ -9,12 +9,6 @@ exports = module.exports = function (io) {
       onlineUsersMongoSocketId[loggedInId] = socket.id;
       //socketid:mongoid (returns mongo id)
       onlineUsersSocketMongoId[socket.id] = loggedInId;
-      console.log(
-        "mongoId:socketId",
-        onlineUsersMongoSocketId,
-        "socketId:mongoId",
-        onlineUsersSocketMongoId
-      );
     });
     socket.on("privateMessage", (data) => {
       let senderSocketId = socket.id;

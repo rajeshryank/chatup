@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
-const mongoose = require('mongoose')
 const { userModel } = require("../models/User");
 const { authenticateToken } = require("../functions/authenticationFunctions.js");
-//body parser
-app.use(express.json());
+
+app.use(express.urlencoded({
+    extended: true
+  }));
 app.get("/user/:userid", authenticateToken, async (req,res)=>{
     try {
         let data =  await userModel.find()
@@ -16,7 +17,7 @@ app.get("/user/:userid", authenticateToken, async (req,res)=>{
                 eachObject._id.toString(), eachObject.email, eachObject.phoneNo])
         }})
         // console.log(filteredData)
-        res.json(filteredData)
+        return res.json(filteredData)
         
     } catch (error) {
         res.sendStatus(500).json(error)
@@ -27,9 +28,9 @@ app.get("/userinfo/:userid", authenticateToken, async (req,res)=>{
     try {
         let data = await userModel.findById(req.params.userid)
         if(data) {
-            res.json(data)
+            return res.json(data)
         } else{
-            res.json("User Not found")
+            return res.json("User Not found")
         }
     } catch (error) {
         res.sendStatus(500).json(error)
