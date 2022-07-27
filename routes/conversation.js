@@ -14,7 +14,7 @@ app.post("/conversation", authenticateToken, async (req, res) => {
     let oldConvo = await conversationModel.findOne({ members: { $all: data } });
 
     if (oldConvo) {
-      console.log("old conversation found!")
+      // console.log("old conversation found!")
       let convoId = oldConvo._id;
       let messages = await messageModel.find({ conversationId: convoId });
       return res.json({ convoId, messages });

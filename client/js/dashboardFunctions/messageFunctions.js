@@ -6,7 +6,6 @@ import { socket } from "../dashboard.js";
 export function updateMessageDb(textData){
     let senderId = localStorage.getItem("currUser")
     let conversationId = localStorage.getItem("conversationId")
-    console.log(conversationId)
     fetch("/message", {
         method: 'POST',
       headers: {
@@ -21,16 +20,16 @@ export function updateMessageDb(textData){
 
 // socket event "privateMessage"
 function triggerprivateMessage(message){
-    //get reciever's MomgoId
+    //get reciever's username and ID
     let recieverUserEl = document.getElementsByClassName("name-focus-class")[0]
     let recieverUserName = recieverUserEl.parentElement.lastElementChild.innerText
     recieverUserName = recieverUserName.slice(1);
-    let recieverMongoId = localStorage.getItem(recieverUserName)
-    console.log("recieverMongoId",recieverMongoId);
+    let recieverId = localStorage.getItem(recieverUserName)
+    console.log("recieverMongoId",recieverId);
     //emit message 
     socket.emit("privateMessage", 
        {message:message, 
-        recieverMongoId:recieverMongoId})
+        recieverMongoId:recieverId})
 }
 
 // take value from input box and add it to textMessagesContainerEl
@@ -67,8 +66,9 @@ export function insertMessages(messages,currUserId) {
     } 
     );
   }
-export async function insertAbout(receieverId,curruser=false) {
-  // display logout 
+
+// if second arg true enables logout and insertsdata
+export async function insertAbout(userId,curruser=false) {
   if(curruser) {
     let logoutEl = document.getElementById("logout")
     console.log(logoutEl)
@@ -78,8 +78,9 @@ export async function insertAbout(receieverId,curruser=false) {
     console.log(logoutEl)
     logoutEl.style = "visibility:hidden"
   }
+
   // get userinfo from /userinfo/:userid
-    let response = await fetch(`/userinfo/${receieverId}`, {headers:{
+    let response = await fetch(`/userinfo/${userId}`, {headers:{
       jwttoken: getFromCookie("jwttoken")
     }})
     let data = await response.json()
@@ -95,9 +96,10 @@ export async function insertAbout(receieverId,curruser=false) {
     profileInfo.innerText = `${data.name}'s profile`
 }
 
-export function getMessages(event,receieverId) {
+export function getMessages(receieverId) {
     let messageEl = document.getElementById("text-messages-container");
     messageEl.innerHTML = ""
+    //curr user's mongoId 
     let currUserId = getFromCookie("currUserId")
     // fetch "/conversation" and get messages (if present) with the conversation ID
     if (currUserId && receieverId) {
@@ -115,10 +117,7 @@ export function getMessages(event,receieverId) {
                           //store conversationId and insert messages
                           localStorage.setItem("conversationId", data.convoId)
                           if(Object.keys(messages).length >= 1) {
-                              localStorage.setItem("conversationId", data.convoId)
-                              if (Object.keys(messages).length >=1) {
                                 insertMessages(messages,currUserId)
-                                }
                             }else{
                               let messageEl = document.getElementById("text-messages-container");
                               messageEl.innerHTML = ""
@@ -131,6 +130,6 @@ export function getMessages(event,receieverId) {
                       insertAbout(receieverId)
                      })
     } else {
-      console.log("ERROR : Reciever Id not found");
+      console.log("ERROR : Reciever Id or currUser ID not found ",  currUserId, receieverId )
     }
 }
