@@ -29,7 +29,7 @@ function triggerprivateMessage(message){
     //emit message 
     socket.emit("privateMessage", 
        {message:message, 
-        recieverMongoId:recieverId})
+        recieverId:recieverId})
 }
 
 // take value from input box and add it to textMessagesContainerEl
