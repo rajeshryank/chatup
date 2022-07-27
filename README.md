@@ -22,9 +22,4 @@ In the dashboard, You can see your profile info in the right side along with a l
 
 select an user from the list and send a message.
 If the **other user is online the message will be delivered instantly using sockets** and then the messages are stored in database without affecting the instant delivery of the messages. 
-<<<<<<< HEAD
 If the **receiver is not online  all the messages you sent will be stored in the database and delivered once the other user logs in to his account.**
-=======
-If the **receiver is not online  all the messages you sent will be stored in the database and delivered once the other user logs in to his account.**
-
->>>>>>> 8433283d941a81b1a8503b007a7e986853edb7d9
