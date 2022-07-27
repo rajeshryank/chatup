@@ -1,19 +1,16 @@
 import {
-  removeFocusClass,
   keepFocused,
   logOut,
 } from "./dashboardFunctions/helperfunctions.js";
 import {
   addMessageDiv,
   getMessages,
-  insertAbout,
 } from "./dashboardFunctions/messageFunctions.js";
 import {
   getUsers,
   currUserProfile,
 } from "./dashboardFunctions/userfunctions.js";
 import {
-  getFromCookie,
   scrollDown,
 } from "./dashboardFunctions/helperfunctions.js";
 import { recievedMessage } from "./dashboardFunctions/templates.js";
@@ -46,8 +43,8 @@ function onClickUser(event) {
 socket.on("newMessage", (data) => {
   console.log("recieved message:", data);
   let senderEl = document.getElementsByClassName(data.senderId)[0];
-  console.log(data.message);
-  senderEl.innerHTML += recievedMessage(data.message, "12:41");
+  let sentTime = new Date()
+  senderEl.innerHTML += recievedMessage(data.message, sentTime);
   scrollDown();
 });
 
@@ -56,7 +53,7 @@ async function main() {
 
   await getUsers();
   socket.emit("login", { loggedInId: localStorage.getItem("currUser") });
-  currUserProfile(event);
+  currUserProfile();
 
    // handle click on the recievers
  let usersArray = document.getElementsByClassName("name");

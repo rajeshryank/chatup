@@ -24,7 +24,7 @@ exports = module.exports = function (io) {
           });
       } else {
         console.log(
-          "ERROR!! socketIdOfreciever:",
+          "Reciever not online! socketIdOfreciever:",
           socketIdOfreciever,
           "senderMongoId:",
           senderMongoId

@@ -31,8 +31,7 @@ export function aboutUserTemplate(name,username,email,phone) {
         return template
 }
 
-
-
+//helper for sentMessage and RecievedMessage
 function processTime(time){
     let timeConverted = new Date(time)
 
@@ -47,38 +46,39 @@ function processTime(time){
         let dd = timeConverted.getDate() 
         let mm = timeConverted.getMonth()
         let yyyy = timeConverted.getFullYear()
+        yyyy =  String(yyyy).slice(2)
         let dmy = `${dd}:${mm}:${yyyy}`
-        return {hrMi:hrMi,dmy:dmy}
+        return {hour:hrMi,date:dmy}
     }else {
-        return {hrMi:hrMi}
+        return {hour:hrMi}
     }
 }
 
 // message bubble for sent and recieved messages 
 export function sentMessage(message,time) {
     let finalTime = processTime(time)
-    if(finalTime.dmy){
+    if(finalTime.date){
         let template = `<div class="message-bubble">
-    <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hrMi} ${finalTime.dmy}</small></div>
+    <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hour} ${finalTime.date}</small></div>
     <div class="r-empty-div"></div>
     </div>`
     return template
     } let template = `<div class="message-bubble">
-    <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hrMi}</small></div>
+    <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hour}</small></div>
     <div class="r-empty-div"></div>
     </div>`
     return template
 }
 export function recievedMessage(message,time) {
     let finalTime = processTime(time)
-    if(finalTime.dmy){
+    if(finalTime.date){
         let template = `<div class="message-bubble">
-    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${finalTime.hrMi} ${finalTime.dmy}</small></div>
+    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${finalTime.hour} ${finalTime.date}</small></div>
     <div class="r-empty-div"></div>
     </div>`
     return template
     } let template = `<div class="message-bubble">
-    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${finalTime.hrMi}</small></div>
+    <div class="receieved-message"><p class="text">${message}</p><small class="recieved-time">${finalTime.hour}</small></div>
     <div class="r-empty-div"></div>
     </div>`
     return template
