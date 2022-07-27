@@ -4,7 +4,7 @@ import { socket } from "../dashboard.js";
 
 // upload message to DB with convoId, senderId and textData 
 export function updateMessageDb(textData){
-    let senderId = localStorage.getItem("currUser")
+    let senderId = getFromCookie("currUserId")
     let conversationId = localStorage.getItem("conversationId")
     fetch("/message", {
         method: 'POST',
@@ -99,7 +99,7 @@ export async function insertAbout(userId,curruser=false) {
 export function getMessages(receieverId) {
     let messageEl = document.getElementById("text-messages-container");
     messageEl.innerHTML = ""
-    //curr user's mongoId 
+    //curr userId 
     let currUserId = getFromCookie("currUserId")
     // fetch "/conversation" and get messages (if present) with the conversation ID
     if (currUserId && receieverId) {

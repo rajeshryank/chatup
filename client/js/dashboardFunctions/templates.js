@@ -60,12 +60,10 @@ export function sentMessage(message,time) {
     if(finalTime.date){
         let template = `<div class="message-bubble">
     <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hour} ${finalTime.date}</small></div>
-    <div class="r-empty-div"></div>
     </div>`
     return template
     } let template = `<div class="message-bubble">
     <div class="sent-message"><p class="text">${message}</p><small class="sent-time">${finalTime.hour}</small></div>
-    <div class="r-empty-div"></div>
     </div>`
     return template
 }
