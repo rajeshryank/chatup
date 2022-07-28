@@ -4,7 +4,7 @@ const path = require("path");
 
 const cookieParser = require("cookie-parser");
 
-const { authenticateToken, authenticateLoginToken} = require("../functions/authenticationFunctions.js");
+const { authenticateToken, checkForTokenAndVerify} = require("../functions/authenticationFunctions.js");
 const { userModel } = require("../models/User");
 
 app.use(express.urlencoded({
@@ -12,24 +12,22 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 
-
+app.use(express.static(path.join(__dirname, "/client")));
 const { generateToken, signupUser } = require("../functions/functions");
 
-//send loginpage
-app.get("/", authenticateLoginToken, (req, res) => {
+//send loginpage if failed to verify token
+app.get("/", checkForTokenAndVerify,(req, res) => {
   console.log("sending login page..");
   res.sendFile(path.join(__dirname, "..", "/client/signIn.html"));
 });
-
-app.get("/login", authenticateLoginToken, (req, res) => {
+app.get("/login",checkForTokenAndVerify, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "/client/signIn.html"));
 });
 
-
+//verify login credentials and send token and curruserid in cookies and redirect to dashboard
 app.post("/login", async (req, res) => {
   console.log("verifying username and password..");
   let { username, password } = req.body;
-  console.log(req.body)
   // verify user credentials. Generate and send jwt token
   let response = await generateToken(username, password);
   if (typeof response == "object") {
@@ -41,7 +39,8 @@ app.post("/login", async (req, res) => {
     res.cookie("currUserId", userId, {
       httpOnly: false,
     });
-    return res.redirect("/dashboard");
+    console.log("Forwarding to /dashboard");
+     return res.redirect(`/dashboard`);
   } else {
     // send error message
     let errorMessage = response;
@@ -54,14 +53,15 @@ app.post("/login", async (req, res) => {
 
 //send dashboard.html after verifying token
 app.get("/dashboard", authenticateToken, (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "/client/dashboard.html"));
+  return res.sendFile(path.join(__dirname, "..", "/client/dashboard.html"));
 });
+
 //send signup.html
 app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "/client/signUp.html"));
 });
 
-// verify signup data and redirect to login page 
+// verify signup data and redirect to login page. 
 //if error render signup page and send
 app.post("/signup", async (req, res) => {
   let { name, username, password, email } = req.body;

@@ -38,7 +38,8 @@ async function generateToken(username, password) {
       //match password and username
       let verified = bcrypt.compareSync(password, userInfo.hash);
       if (userInfo.username == username && verified) {
-        let payload = { username: username, isLogged: true };
+        let userId = userInfo._id.toString()
+        let payload = {username: username, userId:userId};
         let token = jwt.sign(payload, process.env.signature, {
           algorithm: "HS384",
           expiresIn: "1d",
@@ -47,6 +48,7 @@ async function generateToken(username, password) {
           jwtToken: token,
           message: "Authentication successfull",
         };
+        console.log("response", response);
         return response;
       } else {
         console.log("invalid password");

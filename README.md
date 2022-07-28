@@ -6,6 +6,7 @@ Using ChatUp you can connect with your friends and family instantly **(using soc
 
 All **routes are protected by JSON Web Tokens.**  Your **password is hashed using bcrypt** module before it reaches our database.
 
+If you  see a **green dot** near an user's name it means that the **user is currently online** if its grey then the user is offline.
 ## Sign-Up
 
 Signup to ChatUp using your email Id and choose an username and password. Note that **email and password should be unique for each user.**

@@ -1,13 +1,11 @@
-import { keepFocused, logOut } from "./dashboardFunctions/helperfunctions.js";
-
+import { keepFocused, logOut,removeFocusClass } from "./dashboardFunctions/helperfunctions.js";
 import {
   addMessageDiv,
   getMessages,
 } from "./dashboardFunctions/messageFunctions.js";
 
 import {
-  getUsers,
-  loadDashboard,
+  getUsers,insertAbout
 } from "./dashboardFunctions/userfunctions.js";
 
 import { scrollDown, getFromCookie } from "./dashboardFunctions/helperfunctions.js";
@@ -75,6 +73,21 @@ socket.on("userLeft", (data)=>{
 
 //   document.getElementById("userOnlineStatus").classList.add("online-user")
 // })
+
+// add curr user prof info
+export async function loadDashboard() {
+
+  document.getElementById("intro-header").style = "visibility:visible";
+  let chatContainer = document.getElementById("chat-container");
+  chatContainer.style = "visibility:hidden";
+  
+  await insertAbout(getFromCookie("currUserId"), true);
+
+  let profileInfo = document.getElementById("profile-name");
+  profileInfo.innerText = "My Profile";
+  // remove focus classes for previously selcted user list el if clicked before
+  removeFocusClass();
+}
 
 async function main() {
   await getUsers();

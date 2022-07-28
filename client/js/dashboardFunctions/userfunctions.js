@@ -1,7 +1,5 @@
-import { removeFocusClass } from "./helperfunctions.js";
-import { insertAbout } from "./messageFunctions.js";
 import { scrollDown, getFromCookie } from "./helperfunctions.js";
-
+import {aboutUserTemplate,sentMessage,recievedMessage} from "./templates.js"
 
 // creates template using data from getUsers() func and append
 //it to element list-of-user in html
@@ -29,30 +27,34 @@ export async function getUsers() {
   let jwttoken = getFromCookie("jwttoken");
   let currUserId = getFromCookie("currUserId");
 
-  const response = await fetch(`/user/${currUserId}`, {
-    headers: {
-      jwttoken: jwttoken,
-    },
-  });
+  const response = await fetch(`/user/${currUserId}`);
   const data = await response.json();
   generateUsersList(data);
 }
 
-// add curr user prof info
-export async function loadDashboard() {
+// if second arg true enables logout and insertsdata
+export async function insertAbout(userId,curruser=false) {
+  if(curruser) {
+    let logoutEl = document.getElementById("logout")
+    console.log(logoutEl)
+    logoutEl.style = "visibility:visible"
+  }else {
+    let logoutEl = document.getElementById("logout")
+    console.log(logoutEl)
+    logoutEl.style = "visibility:hidden"
+  }
+    // get userinfo from /userinfo/:userid
+    let response = await fetch(`/userinfo/${userId}`)
+    let data = await response.json()
+    if(!data.phone) {
+      data.phone = "Not Available"
+    }
 
-  document.getElementById("intro-header").style = "visibility:visible";
-  let chatContainer = document.getElementById("chat-container");
-  chatContainer.style = "visibility:hidden";
-  
-  await insertAbout(getFromCookie("currUserId"), true);
+   let template = aboutUserTemplate(data.name, data.username, data.email, data.phone)
+    let aboutListEl = document.getElementById("about-list")
+    aboutListEl.innerHTML = template
 
-  let profileInfo = document.getElementById("profile-name");
-  profileInfo.innerText = "My Profile";
-
-
-  // remove focus classes for previously selcted user list el if clicked before
-  removeFocusClass();
-
+    let profileInfo = document.getElementById("profile-name") 
+    profileInfo.innerText = `${data.name}'s profile`
 
 }

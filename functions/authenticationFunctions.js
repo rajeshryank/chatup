@@ -1,32 +1,52 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-function authenticateLoginToken(req, res, next) {
+
+//call next if no token or error. Else send dashboard
+function checkForTokenAndVerify(req, res, next) {
+  console.log("inside checkForTokenAndVerify");
     let token = req.cookies.jwttoken;
-    if (!token) {
-      console.log("No token... ");
+    let currUserId = req.cookies.currUserId
+    if (!token || !currUserId) {
+      console.log("No token or currUserId!");
       return next();
     }
     jwt.verify(token, process.env.signature, (err, decodedToken) => {
       if (err) {
+        console.log(err, "ERR WHILE VERIFYING");
         return next();
+      } 
+      if(decodedToken.userId== currUserId){
+      console.log("Token already present and verified.. ");
+      return res.redirect("/dashboard")
+    }else{
+      return next()
       }
-      console.log("Authentication successful!");
-      return res.redirect("/dashboard");
     });
   }
 
-  //jwt authentication function
+ //redirect to login page if error or no token else call next
 function authenticateToken(req, res, next) {
     let token = req.cookies.jwttoken
-    if (!token) {
+    let currUserId = req.cookies.currUserId
+    if (!token || !currUserId) {
       return res.redirect("/login")}
     jwt.verify(token, process.env.signature, (err, decodedToken) => {
       if (err) {
+        console.log("Verification failed!!");
         return res.redirect("/login")
       }
-      next();
+      let tokenUserId = decodedToken.userId
+      console.log(tokenUserId, decodedToken.userId);
+      if(currUserId==tokenUserId) { 
+        console.log("tokens matching")
+        return next()
+      }else {
+        console.log("not matching verificationn failed!!")
+        return res.redirect("/login")
+      }
+     
     });
   }
 
-module.exports = {authenticateToken, authenticateLoginToken}
+module.exports = {authenticateToken, checkForTokenAndVerify}

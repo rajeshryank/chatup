@@ -1,6 +1,7 @@
 import { scrollDown, getFromCookie } from "./helperfunctions.js";
 import {aboutUserTemplate,sentMessage,recievedMessage} from "./templates.js"
 import { socket } from "../dashboard.js";
+import {insertAbout} from "./userfunctions.js"
 
 // upload message to DB with convoId, senderId and textData 
 export function updateMessageDb(textData){
@@ -9,7 +10,6 @@ export function updateMessageDb(textData){
     fetch("/message", {
         method: 'POST',
       headers: {
-        jwttoken : getFromCookie("jwttoken"),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }, 
@@ -67,35 +67,6 @@ export function insertMessages(messages,currUserId) {
     );
   }
 
-// if second arg true enables logout and insertsdata
-export async function insertAbout(userId,curruser=false) {
-  if(curruser) {
-    let logoutEl = document.getElementById("logout")
-    console.log(logoutEl)
-    logoutEl.style = "visibility:visible"
-  }else {
-    let logoutEl = document.getElementById("logout")
-    console.log(logoutEl)
-    logoutEl.style = "visibility:hidden"
-  }
-
-  // get userinfo from /userinfo/:userid
-    let response = await fetch(`/userinfo/${userId}`, {headers:{
-      jwttoken: getFromCookie("jwttoken")
-    }})
-    let data = await response.json()
-    if(!data.phone) {
-      data.phone = "Not Available"
-    }
-
-   let template = aboutUserTemplate(data.name, data.username, data.email, data.phone)
-    let aboutListEl = document.getElementById("about-list")
-    aboutListEl.innerHTML = template
-
-    let profileInfo = document.getElementById("profile-name") 
-    profileInfo.innerText = `${data.name}'s profile`
-}
-
 export function getMessages(receieverId) {
     let messageEl = document.getElementById("text-messages-container");
     messageEl.innerHTML = ""
@@ -106,7 +77,6 @@ export function getMessages(receieverId) {
     fetch("/conversation", {
         method: 'POST',
       headers: {
-        jwttoken : getFromCookie("jwttoken"),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }, 
