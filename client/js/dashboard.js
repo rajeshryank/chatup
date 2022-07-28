@@ -1,19 +1,24 @@
-import { keepFocused, logOut,removeFocusClass } from "./dashboardFunctions/helperfunctions.js";
+import {
+  keepFocused,
+  logOut,
+  removeFocusClass,
+} from "./dashboardFunctions/helperfunctions.js";
 import {
   addMessageDiv,
   getMessages,
 } from "./dashboardFunctions/messageFunctions.js";
 
-import {
-  getUsers,insertAbout
-} from "./dashboardFunctions/userfunctions.js";
+import { getUsers, insertAbout } from "./dashboardFunctions/userfunctions.js";
 
-import { scrollDown, getFromCookie } from "./dashboardFunctions/helperfunctions.js";
+import {
+  scrollDown,
+  getFromCookie,
+} from "./dashboardFunctions/helperfunctions.js";
 import { recievedMessage } from "./dashboardFunctions/templates.js";
 export const socket = io();
 
 function onClickUser(event) {
-    keepFocused(event);
+  keepFocused(event);
 
   //visible chat elements
   document.getElementById("intro-header").style = "visibility:hidden";
@@ -29,15 +34,19 @@ function onClickUser(event) {
   messageContainer.classList = receieverId;
 
   // emit userOnlieStatusReq -> receiver online or not
-  console.log("recieverID", receieverId );
-  socket.emit("userOnlineStatusReq", {userId:receieverId})
-  socket.on("userOnlineStatusRes", (data)=>{
-    let userOnline = data.isOnline
-    if(!userOnline) {
-      console.log("useronline", userOnline);
-    document.getElementById("userOnlineStatus").classList.remove("online-user")}
-    else {document.getElementById("userOnlineStatus").classList.add("online-user")}
-  })
+  // check if an useronline when opening a chat
+  socket.emit("userOnlineStatusReq", { userId: receieverId });
+  socket.on("userOnlineStatusRes", (data) => {
+    let userOnline = data.isOnline;
+    let onlineUserEl = document.getElementById("userOnlineStatus");
+    if (!userOnline) {
+        onlineUserEl.classList.remove("online-user");
+        onlineUserEl.innerText = "offline"
+    } else {
+      onlineUserEl.classList.add("online-user")
+      onlineUserEl.innerText = "online"
+    }
+  });
 
   //set receiver's name
   let recieverName = event.target.innerText;
@@ -45,42 +54,54 @@ function onClickUser(event) {
     "selected-user-name-header"
   );
   selectedUserNameHeaderEl.innerText = recieverName;
-  
-    // get messages of curruser and receiver
-     getMessages(receieverId);
+
+  // get messages of curruser and receiver
+  getMessages(receieverId);
 }
 
 //capture newMessage event
 socket.on("newMessage", (data) => {
   console.log("recieved message:", data);
-  //using the classname of recieverId added 
+  //using the classname of recieverId added
   let senderEl = document.getElementsByClassName(data.senderId)[0];
   let sentTime = new Date();
   senderEl.innerHTML += recievedMessage(data.message, sentTime);
   scrollDown();
 });
-//capture userLeft event 
-socket.on("userLeft", (data)=>{
-    let userIdOfUserLeft = data.userId
-    document.getElementById("userOnlineStatus").classList.remove("online-user")
-    let userLeftEl = document.getElementsByClassName(`${userIdOfUserLeft}`)[0]
-    if(userLeftEl){
-      userLeftEl.classList.remove(`${userIdOfUserLeft}`)
-    }
-})
-// // capture userOnline event 
-// socket.on("newUserOnline", (data)=>{
 
-//   document.getElementById("userOnlineStatus").classList.add("online-user")
-// })
+//userleft and useronline events works only if a chatbox is already open.
+//else userOnlineStatusRes event will take care .
+socket.on("userLeft", (data) => {
+  let userIdOfUserLeft = data.userId;
+  let senderEl = document.getElementsByClassName(userIdOfUserLeft)[0];
+  //remove "online-user" if the opened chat is the left user else the  
+  if(senderEl){
+    let userOnlineEl = document.getElementById("userOnlineStatus");
+    userOnlineEl.classList.remove("online-user")
+    userOnlineEl.innerText = "offline"
+  }
+});
+socket.on("userOnline", (data) => {
+  let userOnline = data.onlieUserId;
+  console.log("useronline",userOnline);
+  if (userOnline) {
+    let classOfOnlineUser = document.getElementsByClassName(`${userOnline}`)[0]
+    console.log("class userOnline",classOfOnlineUser);
+    if(classOfOnlineUser){
+      let userOnlineEl = document.getElementById("userOnlineStatus");
+      userOnlineEl.classList.add("online-user")
+      userOnlineEl.innerText = "online"
+    }
+ 
+  }
+})
 
 // add curr user prof info
 export async function loadDashboard() {
-
   document.getElementById("intro-header").style = "visibility:visible";
   let chatContainer = document.getElementById("chat-container");
   chatContainer.style = "visibility:hidden";
-  
+
   await insertAbout(getFromCookie("currUserId"), true);
 
   let profileInfo = document.getElementById("profile-name");
@@ -91,7 +112,7 @@ export async function loadDashboard() {
 
 async function main() {
   await getUsers();
-  // emitlogin event 
+  // emitlogin event
   socket.emit("login", { currUserId: getFromCookie("currUserId") });
 
   // get loggedinuser's profile

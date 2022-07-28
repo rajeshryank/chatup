@@ -1,5 +1,5 @@
 import { scrollDown, getFromCookie } from "./helperfunctions.js";
-import {aboutUserTemplate,sentMessage,recievedMessage} from "./templates.js"
+import {aboutUserTemplate} from "./templates.js"
 
 // creates template using data from getUsers() func and append
 //it to element list-of-user in html
@@ -23,10 +23,8 @@ export function generateUsersList(data) {
 
 //fetch users list  and call generateUsersList()
 export async function getUsers() {
-  // get jwt token and currUserId from cookies
-  let jwttoken = getFromCookie("jwttoken");
+  // currUserId from cookies
   let currUserId = getFromCookie("currUserId");
-
   const response = await fetch(`/user/${currUserId}`);
   const data = await response.json();
   generateUsersList(data);

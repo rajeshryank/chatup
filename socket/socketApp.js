@@ -9,11 +9,8 @@ exports = module.exports = function (io) {
       onlineUsersGetSocketId[currUserId] = socket.id;
       //socketid:userid (get userId)
       onlineUsersGetUserId[socket.id] = currUserId;
+      socket.broadcast.emit("userOnline",{onlieUserId:currUserId})
     })
-
-    //   // broadcast to every socketid about new user's online status
-    //   socket.emit.broadcast("newUserOnline", {userId: onlineUsersGetUserId[socket.id]})
-    // };
     // emit if the user is online -> true or false
     socket.on("userOnlineStatusReq", (data)=>{
       let socketId = onlineUsersGetSocketId[data.userId]
