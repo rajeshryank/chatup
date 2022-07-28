@@ -129,8 +129,16 @@ height: 100%;
 
  }
  @media only screen and (max-width: 540px){
+    #container {
+        width: 100vw;
+        height: 95vh;
+        background-color: #1c1f2c ;
+        display: flex;
+       
+    }
+    
     .username {
-       font-size: 12px;
+       font-size: 14px;
     }
     .message-bubble {
         font-size: 14px;
@@ -148,8 +156,11 @@ height: 100%;
     }
  }
 
- /* @media only screen and (max-width:450px) {
+ @media only screen and (max-width:450px) {
     .name {
-        display: hidden;
-    }
- }  */
+        font-size: 10px;
+       }
+    .username {
+        font-size: 9px;
+     }
+ } 
