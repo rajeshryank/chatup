@@ -109,12 +109,6 @@ export async function loadDashboard() {
   // remove focus classes for previously selcted user list el if clicked before
   removeFocusClass();
 }
-window.addEventListener("load",function() {
-  setTimeout(function(){
-      // This hides the address bar:
-      window.scrollTo(0, 1);
-  }, 0);
-});
 async function main() {
   await getUsers();
   // emitlogin event

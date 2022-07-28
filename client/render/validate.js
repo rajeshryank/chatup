@@ -1,20 +1,22 @@
-const usernameEl = document.getElementById('username-el')
+const usernameEl = document.getElementById("username-el")
 usernameEl.addEventListener("keyup", usernameValidation)
 const passwordEl = document.getElementById('password-el')
 passwordEl.addEventListener("keyup", passwordValidation)
 
 let specialChar = /[-.!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/
 function usernameValidation() {
+    console.log("inside usernameValidation");
     let usernameErrEl = document.getElementById("username-error")
     let username = usernameEl.value
-    if(username.length > 4){
+    if(username.length > 4 && username.length <=10){
         if(username.search(specialChar) == -1) {
             usernameErrEl.innerText = ""} 
         else{usernameErrEl.innerText = "invalid special characters"}
     }else{
-        usernameErrEl.innerText = "min 5 characters required"}
+        usernameErrEl.innerText = "min 5 amd max 10 characters required"}
 }
 function passwordValidation(){
+    console.log("inside password validation");
     let passwordErrEl = document.getElementById("password-error")
     let password = passwordEl.value
     if(password.length < 7) {

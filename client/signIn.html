@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGN In</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Signin</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon-32x32.png">   
+     <link rel="stylesheet" href="styles.css">
 
 
 </head>
@@ -14,7 +15,7 @@
         <div id="brand"><h1>ChatUp</h1></div>
         <div id="form-container" >
                 <h1 id="form-header" class="form-container-element">Sign In</h1>
-                <form method="post" id="form"  onsubmit="return validations()" action="/login">           
+                <form method="post" id="form"  onsubmit="return validateForm()" action="/login">           
                         <input type="text" name="username" class="form-element form-container-element" id="username-el" placeholder="username">
                         <span id="username-error" class="error-text"> </span>
                         <input type="password" name="password" class="form-element form-container-element" id="password-el" placeholder="Password">
@@ -28,6 +29,6 @@
             </div>
         </div>
     </div>
-    <script src="validate.js" defer></script>
+    <script src="validatesignin.js" defer></script>
 </body>
 </html>
