@@ -23,10 +23,10 @@ exports = module.exports = function (io) {
     socket.on('disconnect', function() {
       let userIdOfUserLeft=  onlineUsersGetUserId[socket.id]
         socket.broadcast.emit("userLeft", {userId: userIdOfUserLeft})
+        //delete userId
         delete onlineUsersGetUserId[socket.id]
+        //delete socket id
         delete onlineUsersGetSocketId[userIdOfUserLeft]
-        console.log("after delete");
-
       ;})
     socket.on("privateMessage", (data) => {
       let senderSocketId = socket.id;
