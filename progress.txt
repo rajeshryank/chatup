@@ -1,7 +1,28 @@
-Backend:
+Pending:
+- enable user icon on top when resizing
+- add logout in user list
+- optimise  for mobile view
+- delete all from database and signup new accounts
+- optimise and beautiy the code
+- messages recieved notification
+
+Done:
 -user password hashed before storing in MongoDb
 -JWT authentication has been implemented
 -login and signup created
 -user login info stored in database named "realtimeChatApp" collection - "users"
 -send messages and messages grouped using conversationID stored in conversation collection
      which contains [senderId, recieverId] and each message doc contains {conversationId,senderid,textData}
+- retrieve list of users from DB and add to dashboard
+- fetch old messages from db
+- store the sent messages to db 
+- Dasshboard UI and functions
+- send and recieve messages via sockets if user is online
+- check for duplicate email while signup
+- render signin page for email duplicate or username duplicate
+- render login page for username/password doesn't match
+- check for duplicate username and email
+- add time recieved and sent
+- online status
+- reimplement jwt
+- validate signup page (5 min and 10 max letters for name and username)
