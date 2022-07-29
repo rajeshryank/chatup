@@ -6,6 +6,8 @@ const { authenticateToken } = require("../functions/authenticationFunctions.js")
 app.use(express.urlencoded({
     extended: true
   }));
+
+  // send all other user info except the requesting user's
 app.get("/user/:userid", authenticateToken, async (req,res)=>{
     try {
         let data =  await userModel.find()
@@ -24,6 +26,7 @@ app.get("/user/:userid", authenticateToken, async (req,res)=>{
     }
 })
 
+//send requesting user info
 app.get("/userinfo/:userid", authenticateToken, async (req,res)=>{
     try {
         let data = await userModel.findById(req.params.userid)
