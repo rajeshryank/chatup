@@ -47,7 +47,7 @@ function processTime(time){
         let mm = timeConverted.getMonth()
         let yyyy = timeConverted.getFullYear()
         yyyy =  String(yyyy).slice(2)
-        let dmy = `${dd}:${mm}:${yyyy}`
+        let dmy = `${dd}/${mm}/${yyyy}`
         return {hour:hrMi,date:dmy}
     }else {
         return {hour:hrMi}
