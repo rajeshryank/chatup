@@ -1,9 +1,9 @@
 # Welcome to ChatUp!
 
 A Real-time Chat Application built using **mongoDB, socket.io,nodejs,JavaScript, JWT,HTML and CSS.** (Deployed  [**link**](https://chatup-dep.herokuapp.com))
-
+ <br/>
+<small><b>snapshot of dashboard</b></small>
 <img src="https://raw.githubusercontent.com/rajeshryank/chatup/main/screenshots/dashboard.png" alt="dashboard">
-<small>snapshot of dashboard</small> <br/>
 
 Using ChatUp you can connect with your friends and family instantly **(using sockets your messages are delivered to the receiver in an instant)**. All the **messages you sent and received are securely stored in MongoDB** powered by Microsoft Azure , So you don't need to worry about loosing your data.
 
